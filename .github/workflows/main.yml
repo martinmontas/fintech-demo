@@ -22,6 +22,12 @@ jobs:
         with:
           node-version: 18
 
+      - name: Move to correct directory
+        run: cd ${{ github.workspace }}
+
+      - name: Verify package.json exists
+        run: ls -la ${{ github.workspace }}
+
       - name: Install dependencies
         run: |
           cd ${{ github.workspace }}
