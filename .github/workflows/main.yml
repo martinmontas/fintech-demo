@@ -23,12 +23,14 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
-        working-directory: .
+        run: |
+          cd ${{ github.workspace }}
+          npm install
 
       - name: Build
-        run: npm run build
-        working-directory: .
+        run: |
+          cd ${{ github.workspace }}
+          npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
