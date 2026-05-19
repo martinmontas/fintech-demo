@@ -14,29 +14,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
-          node-version: 18
-
-      - name: Move to correct directory
-        run: cd ${{ github.workspace }}
-
-      - name: Verify package.json exists
-        run: ls -la ${{ github.workspace }}
+          node-version: 20
 
       - name: Install dependencies
-        run: |
-          cd ${{ github.workspace }}
-          npm install
+        run: npm install
 
       - name: Build
-        run: |
-          cd ${{ github.workspace }}
-          npm run build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -46,9 +34,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -56,3 +41,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
